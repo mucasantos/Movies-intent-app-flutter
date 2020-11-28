@@ -237,6 +237,7 @@ class _ListViewWidgetState extends State<ListViewWidget> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Stack(children: [
+
                     Container(
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(24),
@@ -250,7 +251,7 @@ class _ListViewWidgetState extends State<ListViewWidget> {
                                 image: MovieConstants().getBackdropPath(
                                     widget.listitems[i].posterPath),
                                 width: MediaQuery.of(context).size.width * 0.4,
-                                height: 200,
+                                height: 180,
                                 fit: BoxFit.cover,
                               )
                             : widget.listitems[i].backdropPath != null

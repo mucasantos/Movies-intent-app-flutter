@@ -5,6 +5,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'package:movies_intent/constants/apiKey.dart';
+import 'package:movies_intent/models/movieVideos.dart';
+import 'package:movies_intent/screens/detailScreen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Future<Iterable<MovieModel.Result>> fetchData() async {
   var responses = await Future.wait([
@@ -72,4 +75,38 @@ Future<MovieModel.Welcome> genreSeach(String type, int pageNumber) async {
     // then throw an exception.
     throw Exception('Failed to load movies');
   }
+}
+
+Future<String> videoPlayer (int movieId) async {
+
+  final String videoKey = 'https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${ApiKey().apiKey}&language=en-US';
+  final response = await http.get(videoKey);
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    String data = jsonDecode(response.body)['results'][0]['key'];
+
+    print(data);
+
+    String url = 'https://www.youtube.com/watch?v=$data';
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+
+
+    return data;
+    //return getVideos.fromJson(jsonDecode(response.body));
+  } else {
+
+    print(response.body);
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load movies');
+  }
+
+
 }

@@ -266,7 +266,7 @@ Widget posterWidget(BuildContext context, String imagePath, int id) {
                     fadeOutCurve: Curves.easeOut,
                     placeholder: kTransparentImage,
                     image: MovieConstants().getBackdropPath(imagePath),
-                    height: 150,
+                    height: 120,
                     fit: BoxFit.cover,
                   )),
             ),

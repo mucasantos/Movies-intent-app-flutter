@@ -6,7 +6,9 @@ import 'package:loading/indicator/ball_pulse_indicator.dart';
 import 'package:loading/loading.dart';
 import 'package:movies_intent/constants/movie_const.dart';
 import 'package:movies_intent/models/movieDetailModel.dart';
+import 'package:movies_intent/models/movieVideos.dart';
 import 'package:movies_intent/screens/imageScreen.dart';
+import 'package:movies_intent/services/apiCalls.dart';
 import 'package:movies_intent/services/fetchMovieDetails.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -28,7 +30,9 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   viewTrailer(String query) async {
-    String url = 'https://www.youtube.com/results?search_query=$query';
+    String url = 'https://www.youtube.com/watch?v=$query';
+
+    print(widget.movieId);
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -327,9 +331,14 @@ class _DetailScreenState extends State<DetailScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: FlatButton.icon(
-                onPressed: () => viewTrailer(originalTitle),
                 icon: Icon(Icons.video_label),
-                label: Text("Watch Trailer")),
+                label: Text("Watch Trailer"),
+              onPressed: () =>  videoPlayer(widget.movieId)
+
+//                  print(videoPlayer(widget.movieId)),//viewTrailer(originalTitle),
+            ),
+
+
           ),
           Container(
               padding: EdgeInsets.symmetric(
